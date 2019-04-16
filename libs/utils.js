@@ -2,6 +2,7 @@
 
 const xml2js = require('xml2js');
 const crypto = require('crypto');
+const moment = require('moment');
 
 // XML构建
 exports.buildXML = (obj, opt) => {
@@ -46,34 +47,24 @@ exports.md5 = (str) => {
 };
 
 // sha1加密
-exports.sha1 = (str, secret) => {
-    if(typeof str !== 'string') {
-        str = JSON.stringify(str);
-    }
-
-    return crypto.createHash('sha1')
+exports.sha256 = (str, secret) => {
+    return crypto.createHmac('sha256', key).update(str).digest('hex');
 };
 
 // 生成时间戳
 // 微信时间戳方式：
 // 其他
 exports.timestamp = () => {
-
+    return moment().format('')
 };
 
 // 随机字符串
 // 可指定长度,代码集,返回方式等
 exports.nonce = (len) => {
-    const book = ['ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'];
-    let   str = "";   // 字符串
-
-
-
-    for(let i = 0; i < len; i++){
-
-    }
-
-    return result.join('');
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let noceStr = '', maxPos = chars.length;
+    while (length--) noceStr += chars[Math.random() * maxPos |0];
+    return noceStr;
 };
 
 exports.sign = (type, obj) => {
